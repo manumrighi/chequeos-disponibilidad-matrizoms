@@ -99,5 +99,3 @@ def trigger_check_accountReport():
     result = loop.run_until_complete(check_accountReport.run_check())
     return jsonify(result)
 
-#if __name__ == "__main__":
-    #app.run(host="0.0.0.0", port=8080)
