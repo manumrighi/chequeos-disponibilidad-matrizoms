@@ -5,3 +5,5 @@ requests>=2.31.0
 flask
 requests
 supabase
+serverchecks
+aiohttp==3.11.10

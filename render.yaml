@@ -1,0 +1,13 @@
+services:
+- type: web
+  name: chequeos-app
+  env: python
+  buildCommand: pip install -r requirements.txt
+  startCommand: python main.py
+  envVars:
+    - key: SUPABASE_URL
+      fromEnvVar: SUPABASE_URL
+    - key: SUPABASE_KEY
+      fromEnvVar: SUPABASE_KEY
+    - key: SECRET_TOKEN
+      fromEnvVar: SECRET_TOKEN
