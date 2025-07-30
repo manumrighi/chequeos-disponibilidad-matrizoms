@@ -5,3 +5,4 @@ aiohttp==3.11.10
 gunicorn
 flask-session
 oauthlib
+python-dotenv

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Negociación y Riesgo{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h1>Negociación y Riesgo</h1>
+            <p>Sistema de Monitoreo de Disponibilidad</p>
+        </div>
+        
+        <div class="login-content">
+            <h2>Acceso al Sistema</h2>
+            <p>Inicia sesión con tu cuenta corporativa para acceder al panel de monitoreo.</p>
+            
+            <div class="login-actions">
+                <a href="{{ url_for('login') }}" class="btn btn-google">
+                    <i class="fab fa-google"></i>
+                    Continuar con Google
+                </a>
+            </div>
+            
+            <div class="login-info">
+                <div class="info-item">
+                    <i class="fas fa-users"></i>
+                    <span>Acceso exclusivo para el equipo</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-lock"></i>
+                    <span>Autenticación segura con OAuth 2.0</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Monitoreo en tiempo real</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-footer">
+            <p>Solo usuarios autorizados con dominios corporativos pueden acceder</p>
+        </div>
+    </div>
+    
+    <!-- Animated background elements -->
+    <div class="bg-animation">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animate floating shapes
+document.addEventListener('DOMContentLoaded', function() {
+    const shapes = document.querySelectorAll('.floating-shape');
+    
+    shapes.forEach((shape, index) => {
+        // Random animation delay and duration
+        const delay = Math.random() * 2;
+        const duration = 3 + Math.random() * 2;
+        
+        shape.style.animationDelay = `${delay}s`;
+        shape.style.animationDuration = `${duration}s`;
+    });
+});
+</script>
+{% endblock %} 

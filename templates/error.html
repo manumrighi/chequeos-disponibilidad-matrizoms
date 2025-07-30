@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}{{ error_title }} - Negociación y Riesgo{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-card">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        
+        <div class="error-content">
+            <h1>{{ error_title or "Error" }}</h1>
+            <p class="error-message">{{ error_message or "Ha ocurrido un error inesperado." }}</p>
+            
+            {% if error_code %}
+            <div class="error-code">
+                Código de error: {{ error_code }}
+            </div>
+            {% endif %}
+            
+            <div class="error-actions">
+                {% if show_login %}
+                <a href="{{ url_for('home') }}" class="btn btn-primary">
+                    <i class="fas fa-home"></i>
+                    Volver al Inicio
+                </a>
+                {% else %}
+                <a href="{{ url_for('home') }}" class="btn btn-primary">
+                    <i class="fas fa-home"></i>
+                    Ir al Dashboard
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-secondary">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.error-card {
+    background: rgba(30, 42, 71, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: var(--border-radius-xl);
+    padding: 3rem;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-xl);
+}
+
+.error-icon {
+    background: rgba(220, 53, 69, 0.1);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    font-size: 2rem;
+    color: var(--danger);
+}
+
+.error-content h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    color: var(--gray-300);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.error-code {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 0.75rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    margin-bottom: 2rem;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .error-card {
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .error-actions {
+        flex-direction: column;
+    }
+    
+    .error-content h1 {
+        font-size: 1.5rem;
+    }
+}
+</style>
+{% endblock %} 
