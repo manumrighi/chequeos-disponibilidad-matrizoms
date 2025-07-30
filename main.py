@@ -112,5 +112,5 @@ def trigger_check_disponibility():
     result = loop.run_until_complete(check_disponibility.run_check())
     return jsonify(result)
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+#if __name__ == "__main__":
+    #app.run(host="0.0.0.0", port=8080, debug=True)
