@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}Chequeos - Negociación y Riesgo{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumb">
+        <a href="/home" class="breadcrumb-link">
+            <i class="fas fa-home"></i>
+            Inicio
+        </a>
+        <span class="breadcrumb-separator">
+            <i class="fas fa-chevron-right"></i>
+        </span>
+        <span class="breadcrumb-current">Chequeos de Disponibilidad</span>
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <div class="welcome-content">
+            <h1>Panel de Monitoreo</h1>
+            <p>Ejecuta y supervisa los chequeos de disponibilidad de todos los servicios críticos</p>
+        </div>
+        <div class="welcome-stats">
+            <div class="stat-item">
+                <i class="fas fa-server"></i>
+                <div>
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Servicios</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <span class="stat-number" id="last-check">--</span>
+                    <span class="stat-label">Último chequeo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+        <button class="btn btn-primary btn-large" id="run-all-checks">
+            <i class="fas fa-play-circle"></i>
+            Ejecutar Todos los Chequeos
+        </button>
+        <button class="btn btn-secondary" id="refresh-status">
+            <i class="fas fa-sync-alt"></i>
+            Actualizar Estado
+        </button>
+    </div>
+
+    <!-- Monitoring Cards Grid -->
+    <div class="monitoring-grid">
+        <div class="monitoring-card" data-check="admin">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="card-title">
+                    <h3>Admin</h3>
+                    <p>Verificación de plataformas administrativas</p>
+                </div>
+            </div>
+            <div class="card-status" id="status-admin">
+                <span class="status-indicator pending"></span>
+                <span class="status-text">Pendiente</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-outline run-check" data-endpoint="/check-admin">
+                    <i class="fas fa-play"></i>
+                    Ejecutar
+                </button>
+                <button class="btn btn-ghost view-logs" data-check="admin">
+                    <i class="fas fa-list"></i>
+                    Ver Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="monitoring-card" data-check="nodes">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="card-title">
+                    <h3>Nodes</h3>
+                    <p>Estado de nodos del sistema</p>
+                </div>
+            </div>
+            <div class="card-status" id="status-nodes">
+                <span class="status-indicator pending"></span>
+                <span class="status-text">Pendiente</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-outline run-check" data-endpoint="/check-nodes">
+                    <i class="fas fa-play"></i>
+                    Ejecutar
+                </button>
+                <button class="btn btn-ghost view-logs" data-check="nodes">
+                    <i class="fas fa-list"></i>
+                    Ver Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="monitoring-card" data-check="sessions">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card-title">
+                    <h3>Sesiones</h3>
+                    <p>Verificación de sesiones activas</p>
+                </div>
+            </div>
+            <div class="card-status" id="status-sessions">
+                <span class="status-indicator pending"></span>
+                <span class="status-text">Pendiente</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-outline run-check" data-endpoint="/check-sessions">
+                    <i class="fas fa-play"></i>
+                    Ejecutar
+                </button>
+                <button class="btn btn-ghost view-logs" data-check="sessions">
+                    <i class="fas fa-list"></i>
+                    Ver Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="monitoring-card" data-check="matriz">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-th"></i>
+                </div>
+                <div class="card-title">
+                    <h3>Matriz</h3>
+                    <p>Sistema de matriz de riesgos</p>
+                </div>
+            </div>
+            <div class="card-status" id="status-matriz">
+                <span class="status-indicator pending"></span>
+                <span class="status-text">Pendiente</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-outline run-check" data-endpoint="/check-matriz">
+                    <i class="fas fa-play"></i>
+                    Ejecutar
+                </button>
+                <button class="btn btn-ghost view-logs" data-check="matriz">
+                    <i class="fas fa-list"></i>
+                    Ver Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="monitoring-card" data-check="etrader">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="card-title">
+                    <h3>eTrader</h3>
+                    <p>Plataforma de trading electrónico</p>
+                </div>
+            </div>
+            <div class="card-status" id="status-etrader">
+                <span class="status-indicator pending"></span>
+                <span class="status-text">Pendiente</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-outline run-check" data-endpoint="/check-etrader">
+                    <i class="fas fa-play"></i>
+                    Ejecutar
+                </button>
+                <button class="btn btn-ghost view-logs" data-check="etrader">
+                    <i class="fas fa-list"></i>
+                    Ver Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="monitoring-card" data-check="webservice">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <div class="card-title">
+                    <h3>Web Service</h3>
+                    <p>Servicios web y APIs</p>
+                </div>
+            </div>
+            <div class="card-status" id="status-webservice">
+                <span class="status-indicator pending"></span>
+                <span class="status-text">Pendiente</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-outline run-check" data-endpoint="/check-webService">
+                    <i class="fas fa-play"></i>
+                    Ejecutar
+                </button>
+                <button class="btn btn-ghost view-logs" data-check="webservice">
+                    <i class="fas fa-list"></i>
+                    Ver Logs
+                </button>
+            </div>
+        </div>
+
+        <div class="monitoring-card" data-check="account">
+            <div class="card-header">
+                <div class="card-icon">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <div class="card-title">
+                    <h3>Account Report</h3>
+                    <p>Reportes de cuentas y balances</p>
+                </div>
+            </div>
+            <div class="card-status" id="status-account">
+                <span class="status-indicator pending"></span>
+                <span class="status-text">Pendiente</span>
+            </div>
+            <div class="card-actions">
+                <button class="btn btn-outline run-check" data-endpoint="/check-accountReport">
+                    <i class="fas fa-play"></i>
+                    Ejecutar
+                </button>
+                <button class="btn btn-ghost view-logs" data-check="account">
+                    <i class="fas fa-list"></i>
+                    Ver Logs
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Modal -->
+<div id="loading-modal" class="modal">
+    <div class="modal-content">
+        <div class="loading-spinner"></div>
+        <h3>Ejecutando Chequeos</h3>
+        <p id="loading-message">Iniciando verificaciones...</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Modal -->
+<div id="results-modal" class="modal">
+    <div class="modal-content modal-large">
+        <div class="modal-header">
+            <h3>Resultados del Chequeo</h3>
+            <button class="modal-close" id="close-results">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="results-content">
+            <!-- Results will be inserted here -->
+        </div>
+    </div>
+</div>
+
+<style>
+/* Breadcrumb styles */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+.breadcrumb-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: var(--transition);
+}
+
+.breadcrumb-link:hover {
+    color: var(--accent-light);
+}
+
+.breadcrumb-separator {
+    color: var(--gray-600);
+    font-size: 0.75rem;
+}
+
+.breadcrumb-current {
+    color: var(--gray-300);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %} 

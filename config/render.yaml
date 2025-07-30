@@ -1,0 +1,6 @@
+services:
+- type: web
+  name: chequeos-app
+  env: python
+  buildCommand: pip install -r config/requirements.txt
+  startCommand: gunicorn -w 1 -b 0.0.0.0:8080 main:app 

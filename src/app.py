@@ -27,10 +27,10 @@ def is_development():
         # Variables de entorno de desarrollo
         os.getenv('FLASK_ENV') == 'development',
         os.getenv('FLASK_DEBUG') == '1',
-        # Si estamos ejecutando directamente con python main.py
+        # Si estamos ejecutando directamente con python app.py
         __name__ == "__main__",
-        # Si el archivo main.py está en sys.argv (ejecución directa)
-        any('main.py' in arg for arg in sys.argv),
+        # Si el archivo app.py está en sys.argv (ejecución directa)
+        any('app.py' in arg for arg in sys.argv),
         # Si no hay variables de producción típicas
         not os.getenv('RENDER_SERVICE_NAME'),  # Render
         not os.getenv('HEROKU_APP_NAME'),      # Heroku
@@ -56,11 +56,16 @@ import checks.check_disponibility as check_disponibility
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
-ALLOWED_DOMAINS = ["primary.com.ar"]  # gmail.com agregado para desarrollo/testing
+ALLOWED_DOMAINS = ["primary.com.ar"]
 
 app = Flask(__name__)
+# Configurar rutas para templates y static en la nueva estructura
+app.template_folder = 'templates'
+app.static_folder = 'static'
+
 app.secret_key = os.getenv("SECRET_KEY", "clave-super-secreta")
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_FILE_DIR'] = '../temp/flask_session'
 Session(app)
 
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
@@ -269,4 +274,4 @@ def trigger_check_disponibility():
 
 # --- Para ejecutar local si hiciera falta ---
 if __name__ == "__main__":
-     app.run(host="0.0.0.0", port=8080, debug=True)
+     app.run(host="0.0.0.0", port=8080, debug=True) 
