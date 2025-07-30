@@ -79,16 +79,27 @@ async def process_instance_async(instance_data, session, semaphore):
     urls_to_check = {}
     now = datetime.now().time()
     skip_matriz = now < time(9, 36)
+    skip_byma = now < time(9, 17)
 
     for s in sessions:
-        if s == 'M' and skip_matriz:
-            continue
-        if s == 'B':
+        if s == 'M':
+            if skip_matriz:
+                continue
+            name = checks.get('M')
+            if name:
+                url_row = next((u for u in instance_data['urls'] if u['name'] == name), None)
+                if url_row:
+                    urls_to_check[name] = base + url_row['url']
+
+        elif s == 'B':
             for suffix in ['OR', 'MDP', 'CON']:
+                if skip_byma:
+                    continue
                 name = f"BYMA_{suffix}"
                 url_row = next((u for u in instance_data['urls'] if u['name'] == name), None)
                 if url_row:
                     urls_to_check[name] = base + url_row['url']
+
         else:
             name = checks.get(s)
             if name:

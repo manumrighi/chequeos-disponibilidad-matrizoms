@@ -7,6 +7,7 @@ import checks.check_matriz as check_matriz
 import checks.check_etrader as check_etrader
 import checks.check_webService as check_webService
 import checks.check_accountReport as check_accountReport
+import checks.check_disponibility as check_disponibility
 
 app = Flask(__name__)
 
@@ -99,3 +100,17 @@ def trigger_check_accountReport():
     result = loop.run_until_complete(check_accountReport.run_check())
     return jsonify(result)
 
+
+@app.route("/check-disponibility")
+def trigger_check_disponibility():
+    secret = request.args.get("secret")
+    if secret != "mi-token-secreto":
+        return jsonify({"error": "unauthorized"}), 403
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    result = loop.run_until_complete(check_disponibility.run_check())
+    return jsonify(result)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080, debug=True)
